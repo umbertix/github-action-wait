@@ -2,7 +2,7 @@ name: E2E Tests on Ephemeral environment
 
 on:
   workflow_run:
-    workflows: [ "Build & push services image" ]
+    workflows: [ "Build & push services imagev" ]
     types: [completed]
 
 jobs:
