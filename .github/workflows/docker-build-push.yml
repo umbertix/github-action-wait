@@ -1,0 +1,21 @@
+name: Build & push services image
+
+on: push
+
+jobs:
+  service-build-push:
+    name: Build and Push (Test me boy)
+    runs-on: ubuntu-20.04
+
+    steps:
+      - run: sleep 10s
+
+
+  build-and-push-completed:
+    name: Build and Push completed
+    runs-on: ubuntu-20.04
+    needs: [service-build-push]
+
+    steps:
+      - name: Finished building and Publishing
+        run: echo "Conclusion step for all services image building and pushing. This is a dependency for E2E ephemeral test"
