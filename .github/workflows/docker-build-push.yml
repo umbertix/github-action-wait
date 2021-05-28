@@ -6,6 +6,9 @@ jobs:
   service-build-push:
     name: Build and Push (Test me boy)
     runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+       services: [test1, test2]
 
     steps:
       - run: sleep 10s
