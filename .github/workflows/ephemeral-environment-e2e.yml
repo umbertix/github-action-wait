@@ -1,16 +1,14 @@
 name: E2E Tests on Ephemeral environment
 
 on:
-  workflow_run:
-    workflows: [ "Build & push services image" ]
-    types: [completed]
+  repository_dispatch:
+    types: [build-and-push-passed]
 
 jobs:
   build-ephemeral-environment:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Build environment
     runs-on: ubuntu-latest
 
     steps:
       - name: Done
-        run: echo "Sucesss, go home"
+        run: echo ${{ github.event.client_payload.sha }} ${{ github.event.client_payload.ref }}
