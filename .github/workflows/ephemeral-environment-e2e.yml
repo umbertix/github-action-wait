@@ -38,6 +38,5 @@ jobs:
 
     steps:
       - name: Echo
-        id: build-completed
         run: echo ${{ github.event.client_payload.sha }} ${{ github.event.client_payload.ref }}
 
