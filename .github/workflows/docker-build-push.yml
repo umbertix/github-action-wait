@@ -26,7 +26,7 @@ jobs:
        services: [test1, test2]
 
     steps:
-      - run: sleep 1s
+      - run: sleep 10s
 
 
   build-and-push-completed:
