@@ -11,7 +11,7 @@ jobs:
        services: [test1, test2]
 
     steps:
-      - run: sleep 3s
+      - run: sleep 1s
 
 
   build-and-push-completed:
@@ -26,6 +26,13 @@ jobs:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           event-type: build-and-push-passed
           client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
+
+      - name: Emit repository_dispatch
+        uses: mvasigh/dispatch-action@main
+        with:
+          # You should create a personal access token and store it in your repository
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          event_type: build-and-push-passed
 
       - name: Finished building and Publishing
         run: echo "Conclusion step for all services image building and pushing. This is a dependency for E2E ephemeral test"
