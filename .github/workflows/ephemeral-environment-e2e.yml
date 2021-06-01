@@ -8,7 +8,27 @@ jobs:
   build-ephemeral-environment:
     name: Build environment
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        services: [test1, test2]
 
     steps:
       - name: Done
         run: echo ${{ github.event.client_payload.sha }} ${{ github.event.client_payload.ref }}
+
+      - uses: actions/create-outputs@v0.0.0-fake
+        id: test
+
+  build-ephemeral-done:
+    name: Ephemeral completion
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: LouisBrunner/checks-action@v1.1.1
+        if: always()
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: Ephemeral completed
+          conclusion: ${{ job.status }}
+          output: |
+            {"summary":${{ jobs.build-ephemeral-environment.test.outputs.summary }}}
