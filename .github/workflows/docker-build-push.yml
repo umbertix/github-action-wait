@@ -20,5 +20,12 @@ jobs:
     needs: [service-build-push]
 
     steps:
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          event_type: build-and-push-passed
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
+
       - name: Report build Conclusion
         run: echo "build done"

@@ -1,22 +1,10 @@
 name: E2E Tests on Ephemeral environment
 
-on: push
+on:
+  repository_dispatch:
+    types: [build-and-push-passed]
 
 jobs:
-  wait-for-build:
-    name: Build environment
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Wait on tests
-        # or lewagon/wait-on-check-action@master, but master is not guaranteed to be stable ATM
-        uses: lewagon/wait-on-check-action@master
-        with:
-          ref: ${{ github.ref }}
-          running-workflow-name: 'build-and-push-completed'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 20 # seconds
-
   build-ephemeral-environment:
     name: Build environment
     runs-on: ubuntu-latest
