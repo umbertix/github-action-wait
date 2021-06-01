@@ -4,14 +4,14 @@ on: push
 
 jobs:
   service-build-push:
-    name: Build and Push (Test me boy)
+    name: Build and Push
     runs-on: ubuntu-20.04
     strategy:
       matrix:
        services: [test1, test2]
 
     steps:
-      - run: sleep 1s
+      - run: sleep 10s
 
 
   build-and-push-completed:
@@ -20,11 +20,12 @@ jobs:
     needs: [service-build-push]
 
     steps:
-      - name: Invoke workflow without inputs
-        uses: benc-uk/workflow-dispatch@v1
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v1
         with:
-          workflow: E2E Tests on Ephemeral environment
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          event_type: build-and-push-passed
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
 
-      - name: Finished building and Publishing
-        run: echo "Conclusion step for all services image building and pushing. This is a dependency for E2E ephemeral test"
+      - name: Report build Conclusion
+        run: echo "build done"
