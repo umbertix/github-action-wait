@@ -1,8 +1,6 @@
 name: E2E Tests on Ephemeral environment
 
-on:
-  repository_dispatch:
-    types: [build-and-push-passed]
+on: [workflow_dispatch]
 
 jobs:
   build-ephemeral-environment:
