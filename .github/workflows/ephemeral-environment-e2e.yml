@@ -32,4 +32,4 @@ jobs:
           name: Ephemeral completed
           conclusion: ${{ job.status }}
           output: |
-            {"summary":${{ jobs.build-ephemeral-environment.test.outputs.summary }}}
+            {"summary":${{ needs.build-ephemeral-environment.outputs.summary }}}
