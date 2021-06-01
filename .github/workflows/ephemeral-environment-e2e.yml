@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Wait on tests
         # or lewagon/wait-on-check-action@master, but master is not guaranteed to be stable ATM
-        uses: lewagon/wait-on-check-action@v0.2
+        uses: lewagon/wait-on-check-action@master
         with:
           ref: ${{ github.ref }}
           check-name: Prepare Check Runs # name of the existing check - omit to wait for all checks
