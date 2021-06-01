@@ -19,7 +19,7 @@ jobs:
           status: "queued"
 
   service-build-push:
-    name: Build and Push (Test me boy)
+    name: Build and Push
     runs-on: ubuntu-20.04
     strategy:
       matrix:
@@ -35,6 +35,10 @@ jobs:
     needs: [service-build-push]
 
     steps:
-      - name: Finished building and Publishing
-        id: build-completed
-        run: echo "Conclusion step for all services image building and pushing. This is a dependency for E2E ephemeral test"
+      - name: Report build Conclusion
+        if: always()
+        uses: dflydev/check-runs-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          id: build-completed
+          conclusion: ${{ steps.service-build-push.outcome }}

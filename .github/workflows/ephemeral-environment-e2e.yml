@@ -13,7 +13,7 @@ jobs:
         uses: lewagon/wait-on-check-action@master
         with:
           ref: ${{ github.ref }}
-          check-name: Prepare Check Runs # name of the existing check - omit to wait for all checks
+          check-name: Build and Push # name of the existing check - omit to wait for all checks
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 20 # seconds
 
