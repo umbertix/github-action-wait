@@ -11,11 +11,11 @@ jobs:
         services: [test1, test2]
 
     steps:
-      - name: Done
+      - name: Echo
         run: echo ${{ github.event.client_payload.sha }} ${{ github.event.client_payload.ref }}
 
-      - uses: actions/create-outputs@v0.0.0-fake
-        id: test
+      - name: test
+        run: echo '::set-output name=summary::green'
 
   build-ephemeral-done:
     name: Ephemeral completion
