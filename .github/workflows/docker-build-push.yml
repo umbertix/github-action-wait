@@ -14,7 +14,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           checks: |
             [
-              { "id": "build-completed", "name": "Build completed" },
+              { "id": "build-completed", "name": "Build completed" }
             ]
           status: "queued"
 
