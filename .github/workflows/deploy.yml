@@ -2,11 +2,10 @@ name: Deploy
 
 on:
   workflow_run:
-    workflows: ["Build & push services image", "E2E Tests on Ephemeral environment"]
-    branches: [main, test]
+    workflows: ["Build & push services image"]
+    branches: [main]
     types:
       - completed
-      - requested
 
 jobs:
   deployment:
@@ -14,8 +13,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Echo
+      - name: Echo sha ref
         run: echo ${{ github.event.client_payload.sha }} ${{ github.event.client_payload.ref }}
+
+      - name: Echo conclussion
+        run: echo ${{ github.event.workflow_run.conclusion }}
+
+      - name: Echo workflow_run
+        run: echo ${{ github.event.workflow_run }}
 
       - run: sleep 10s
 
