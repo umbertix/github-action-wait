@@ -9,12 +9,19 @@ on:
       - completed
 
 jobs:
-  deployment:
-    name: Deployment
+  dependencies:
+    name: Dependency workflows
     runs-on: ubuntu-latest
 
     steps:
       - uses: ahmadnassri/action-workflow-run-wait@v1
+
+  deployment:
+    name: Deployment
+    runs-on: ubuntu-latest
+    needs: [dependencies]
+
+    steps:
       - name: Echo sha ref
         run: echo ${{ github.event.client_payload.sha }} ${{ github.event.client_payload.ref }}
 
