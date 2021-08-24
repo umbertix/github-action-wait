@@ -8,7 +8,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: sleep 20s
+      - uses: actions/github-script@v3
+        with:
+          script: |
+            core.setFailed('Action failed')
 
       - name: Tested
         run: echo '::set-output name=summary::green'
