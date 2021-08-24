@@ -2,8 +2,8 @@ name: Deploy
 
 on:
   workflow_run:
-    workflows: ["Build & push services image"]
-    branches: [main]
+    workflows:
+      - Build & push services image
     types:
       - completed
 
