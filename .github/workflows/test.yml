@@ -1,0 +1,15 @@
+name: Test
+
+on: push
+
+jobs:
+  deployment:
+    name: Testing
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: sleep 10s
+
+      - name: Tested
+        run: echo '::set-output name=summary::green'
+
