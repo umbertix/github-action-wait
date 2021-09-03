@@ -23,6 +23,9 @@ categories:
       - 'fix'
       - 'bugfix'
       - 'bug'
+replacers:
+  - search: '/LP-(\d+)/gi'
+    replace: '[LP-$1](https://linear.app/unity3d/issue/LP-$1)'
 change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
 change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
 version-resolver:
