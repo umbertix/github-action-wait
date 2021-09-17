@@ -43,10 +43,11 @@ jobs:
             console.log(response)
 
       - run: echo "Your PR is ${PR} with title ${TITLE} and body ${BODY}"
-        env:
-          PR: ${{ steps.scriptPR.outputs.prNumber }}
-          TITLE: ${{ steps.scriptPR.outputs.title }}
-          BODY: ${{ steps.scriptPR.outputs.body }}
+        with:
+          script: |
+            const constructCommitDetails = require('./.github/scripts/construct-pr-text.js.js')
+            const response = constructCommitDetails(${{ steps.scriptPR.outputs.prNumber }})
+            console.log(response)
 
       - uses: actions/github-script@v3
         with:
