@@ -35,7 +35,7 @@ jobs:
         with:
           script: |
             const script = require('./.github/scripts/construct-pr-text.js')
-            script('${{ github.event.inputs.origin-commit-sha }}', '${{ steps.getPRDetails.outputs.prNumber }}', { core })
+            script('${{ github.event.inputs.origin-commit-sha }}', '${{ steps.getPRDetails.outputs.prNumber }}','${{ steps.getPRDetails.outputs.title }}', '${{ steps.getPRDetails.outputs.body }}', { core })
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
