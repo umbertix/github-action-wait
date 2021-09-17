@@ -42,8 +42,7 @@ jobs:
             const response = await script({github, core})
             console.log(response)
 
-      - run: echo "Your PR is ${PR}"
-        if: success() && steps.scriptPR.outputs.number
+      - run: echo "Your PR is ${PR} with title ${TITLE} and body ${BODY}"
         env:
           PR: ${{ steps.scriptPR.outputs.prNumber }}
           TITLE: ${{ steps.scriptPR.outputs.title }}
