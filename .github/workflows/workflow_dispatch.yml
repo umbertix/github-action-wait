@@ -22,8 +22,8 @@ jobs:
         id: getPRDetails
         if: github.event.inputs.origin-commit-sha != 'false'
         env:
-          repoOwner: 'enzymejs'
-          repoName: 'enzyme-matchers'
+          repoOwner: 'Unity-Technologies'
+          repoName: 'live-platform'
           SHA: ${{ github.event.inputs.origin-commit-sha }}
         with:
           script: |
