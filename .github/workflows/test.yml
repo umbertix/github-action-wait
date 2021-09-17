@@ -19,6 +19,15 @@ jobs:
         env:
           PR: ${{ steps.findPr.outputs.pr }}
 
+      - uses: actions/github-script@v4
+        with:
+          script: |
+            github.repos.listPullRequestsAssociatedWithCommit({
+              owner: typescript-eslint,
+              repo: tslint-to-eslint-config,
+              commit_sha: 351eda15c36ae81cedbfb7654f81a3c8cb89fce1,
+            })
+
       - run: |
           echo "PR #${{ github.event.number }} has been merged";
           echo "context #${{ github.event }}";
