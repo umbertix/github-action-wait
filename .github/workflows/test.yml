@@ -38,7 +38,7 @@ jobs:
           SHA: '351eda15c36ae81cedbfb7654f81a3c8cb89fce1'
         with:
           script: |
-            const script = require('./scripts/get-pr-details.js')
+            const script = require('./.github/scripts/get-pr-details.js')
             const response = await script({github, core})
             console.log(response)
 
