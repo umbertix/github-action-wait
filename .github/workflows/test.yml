@@ -9,8 +9,8 @@ jobs:
 
     steps:
       - run: |
-          echo PR #${{ github.event.number }} has been merged
-          echo context #${{ github.event }}
+          echo "PR #${{ github.event.number }} has been merged";
+          echo "context #${{ github.event }}";
 
       - uses: actions/github-script@v3
         with:
