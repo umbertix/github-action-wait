@@ -23,9 +23,9 @@ jobs:
         with:
           script: |
             github.repos.listPullRequestsAssociatedWithCommit({
-              owner: typescript-eslint,
-              repo: tslint-to-eslint-config,
-              commit_sha: 351eda15c36ae81cedbfb7654f81a3c8cb89fce1,
+              owner: 'typescript-eslint',
+              repo: 'tslint-to-eslint-config',
+              commit_sha: '351eda15c36ae81cedbfb7654f81a3c8cb89fce1',
             })
 
       - run: |
