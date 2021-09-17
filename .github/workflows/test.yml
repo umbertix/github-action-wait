@@ -39,7 +39,8 @@ jobs:
         with:
           script: |
             const script = require('./scripts/get-pr-details.js')
-            await script({github, core})
+            const response = await script({github, core})
+            console.log(response)
 
       - run: echo "Your PR is ${PR}"
         if: success() && steps.scriptPR.outputs.number
