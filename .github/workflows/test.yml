@@ -33,9 +33,9 @@ jobs:
       - uses: actions/github-script@v4
         id: scriptPR
         env:
-          repoOwner: 'typescript-eslint',
-          repoName: 'tslint-to-eslint-config',
-          SHA: '351eda15c36ae81cedbfb7654f81a3c8cb89fce1',
+          repoOwner: 'typescript-eslint'
+          repoName: 'tslint-to-eslint-config'
+          SHA: '351eda15c36ae81cedbfb7654f81a3c8cb89fce1'
         with:
           script: |
             const script = require('./scripts/get-pr-details.js')
