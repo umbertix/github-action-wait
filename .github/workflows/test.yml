@@ -1,13 +1,6 @@
 name: Test
 
-on:
-  - push
-  - workflow_dispatch:
-      inputs:
-        origin-commit-sha:
-          description: "The commit SHA that generated the trigger"
-          required: false
-          default: null
+on: push
 
 jobs:
   deployment:
@@ -16,7 +9,9 @@ jobs:
 
     steps:
       - name: Should not run
-        if: github.event.inputs.origin-commit-sha ne null
+        env:
+          origin-commit-sha: null
+        if: origin-commit-sha != null
         run: echo '::set-output name=summary::green'
 
       - uses: jwalton/gh-find-current-pr@v1
