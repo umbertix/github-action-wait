@@ -12,6 +12,9 @@ jobs:
           echo "PR #${{ github.event.number }} has been merged";
           echo "context #${{ github.event }}";
 
+      - run: |
+         echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }'
+
       - uses: actions/github-script@v3
         with:
           script: |
