@@ -23,7 +23,7 @@ jobs:
         if: github.event.inputs.origin-commit-sha != 'false'
         env:
           repoOwner: 'typescript-eslint'
-          repoName: 'tslint-to-eslint-config'
+          repoName: 'typescript-eslint'
           SHA: ${{ github.event.inputs.origin-commit-sha }}
         with:
           script: |
