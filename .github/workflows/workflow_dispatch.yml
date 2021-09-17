@@ -30,11 +30,18 @@ jobs:
             const script = require('./.github/scripts/get-pr-details.js')
             await script({github, core})
 
+      - uses: actions/github-script@v4
+        id: constructPR
+        with:
+          script: |
+            const script = require('./.github/scripts/construct-pr-text.js')
+            return script(${{ github.event.inputs.oci-image-tag }}, ${{ steps.getPRDetails.outputs.prNumber }})
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
-          commit-message:  Update OCI Image tag to ${{ github.event.inputs.oci-image-tag }} from ${{ steps.getPRDetails.outputs.prNumber }}] and release to test environment
-          title: Update OCI Image tag to ${{ github.event.inputs.oci-image-tag }} from [${{ steps.getPRDetails.outputs.prNumber }}](https://github.com/Unity-Technologies/live-platform/pull/${{ steps.getPRDetails.outputs.prNumber }}) and release to test environment
-          body: This pull request was automatically generated from a Github Action.
+          commit-message: ${{ steps.constructPR.outputs.commit-message }}
+          title: ${{ steps.constructPR.outputs.title }}
+          body: ${{ steps.constructPR.outputs.body }}
           branch: release/test-oci-image-${{ github.event.inputs.oci-image-tag }}
 
