@@ -1,0 +1,37 @@
+name: Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      origin-commit-sha:
+        description: "The commit SHA that generated the trigger"
+        required: false
+        default: 'false'
+
+jobs:
+  workflow_dispatch:
+    name: Manual PR Testing
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/github-script@v4
+        id: getPRDetails
+        if: github.event.inputs.origin-commit-sha != 'false'
+        env:
+          repoOwner: 'typescript-eslint'
+          repoName: 'tslint-to-eslint-config'
+          SHA: ${{ github.event.inputs.origin-commit-sha }}
+        with:
+          script: |
+            const script = require('./.github/scripts/get-pr-details.js')
+            await script({github, core})
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          commit-message:  Update OCI Image tag to ${{ github.event.inputs.oci-image-tag }} from [${{ steps.getPRDetails.outputs.prNumber }}](https://github.com/Unity-Technologies/live-platform/pull/${{ steps.getPRDetails.outputs.prNumber }}) and release to test environment
+          title: Update OCI Image tag to ${{ github.event.inputs.oci-image-tag }} from [${{ steps.getPRDetails.outputs.prNumber }}](https://github.com/Unity-Technologies/live-platform/pull/${{ steps.getPRDetails.outputs.prNumber }}) and release to test environment
+          body: This pull request was automatically generated from a Github Action.
+          branch: release/test-oci-image-${{ github.event.inputs.oci-image-tag }}
+

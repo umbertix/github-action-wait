@@ -13,21 +13,41 @@ jobs:
         with:
           # Can be "open", "closed", or "all".  Defaults to "open".
           state: all
-        # This will echo "Your PR is 7", or be skipped if there is no current PR.
+
       - run: echo "Your PR is ${PR}"
         if: success() && steps.findPr.outputs.number
         env:
           PR: ${{ steps.findPr.outputs.pr }}
 
-      - run: |
-          echo "PR #${{ github.event.number }} has been merged";
-          echo "context #${{ github.event }}";
+      - uses: actions/github-script@v4
+        with:
+          script: |
+            const response = await github.repos.listPullRequestsAssociatedWithCommit({
+              owner: 'typescript-eslint',
+              repo: 'tslint-to-eslint-config',
+              commit_sha: '351eda15c36ae81cedbfb7654f81a3c8cb89fce1',
+            })
+            console.log(response)
 
-      - run: |
-         echo "$GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }'"
-         echo "github.event.number = ${{ github.event.number  }}"
-         echo "github.event.pull_request.number = ${{ github.event.pull_request.number }}"
-         echo "github.event.issue.number = ${{ github.event.issue.number }}"
+      - uses: actions/checkout@v2
+      - uses: actions/github-script@v4
+        id: scriptPR
+        env:
+          repoOwner: 'typescript-eslint'
+          repoName: 'tslint-to-eslint-config'
+          SHA: '351eda15c36ae81cedbfb7654f81a3c8cb89fce1'
+        with:
+          script: |
+            const script = require('./.github/scripts/get-pr-details.js')
+            const response = await script({github, core})
+            console.log(response)
+
+      - run: echo "Your PR is ${PR} with title ${TITLE} and body ${BODY}"
+        with:
+          script: |
+            const constructCommitDetails = require('./.github/scripts/construct-pr-text.js.js')
+            const response = constructCommitDetails(${{ steps.scriptPR.outputs.prNumber }})
+            console.log(response)
 
       - uses: actions/github-script@v3
         with:
