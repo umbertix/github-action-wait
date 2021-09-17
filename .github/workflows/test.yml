@@ -11,7 +11,7 @@ jobs:
       - name: Should not run
         env:
           origin-commit-sha: ${{ null }}
-        if: process.env.origin-commit-sha != null
+        if: ${{ process.env.origin-commit-sha }} != null
         run: echo '::set-output name=summary::green'
 
       - uses: jwalton/gh-find-current-pr@v1
