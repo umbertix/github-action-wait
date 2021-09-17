@@ -7,8 +7,8 @@ module.exports = (imageTag, prNumber, rawTitle, rawBody, { core }) => {
         title = `Update OCI Image tag to ${imageTag} from PR#${prNumber} and release to test environment`;
         message = `Update OCI Image tag to ${imageTag} from PR#${prNumber} and release to test environment`;
         body = 'This pull request was automatically generated from a Github Action.\n' +
-            `The PR ${rawTitle} [${prNumber}](https://github.com/Unity-Technologies/live-platform/pull/${prNumber}) is the origin for this changes\n` +
-        `<details> <summary> ${rawTitle} </summary> ${rawBody} </details>`;
+            `The PR [${prNumber}](https://github.com/Unity-Technologies/live-platform/pull/${prNumber}) is the origin for this changes\n` +
+        `<details> <summary> ${rawTitle} </summary> ` + atob(rawBody) +` </details>`;
     }
 
     core.setOutput('commit-message', message);
