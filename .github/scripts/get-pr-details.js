@@ -3,7 +3,7 @@ module.exports = async ({github, core}) => {
     const result = await github.repos.listPullRequestsAssociatedWithCommit({
         owner: `${repoOwner}`,
         repo: `${repoName}`,
-        ref: `${SHA}`
+        commit_sha: `${SHA}`
     })
 
     const pr = result.data[0];
