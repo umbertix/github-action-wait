@@ -2,30 +2,32 @@ name: Test
 
 on: push
 
-env:
-  PR_NUMBER: ${{ github.event.number }}
-
 jobs:
   deployment:
     name: Testing
     runs-on: ubuntu-latest
 
     steps:
-      - name: Test
-        uses: actions/github-script@0.3.0
+      - uses: jwalton/gh-find-current-pr@v1
+        id: findPr
         with:
-          github-token: ${{github.token}}
-          script: |
-            const core = require('@actions/core')
-            const prNumber = context.payload.number;
-            core.exportVariable('PULL_NUMBER', prNumber);
-
-      - run: echo ::set-env name=PULL_NUMBER::$(echo "$GITHUB_REF" | awk -F / '{print $3}')
-        shell: bash
+          # Can be "open", "closed", or "all".  Defaults to "open".
+          state: all
+        # This will echo "Your PR is 7", or be skipped if there is no current PR.
+      - run: echo "Your PR is ${PR}"
+        if: success() && steps.findPr.outputs.number
+        env:
+          PR: ${{ steps.findPr.outputs.pr }}
 
       - run: |
-          echo PR #${{ github.event.number }} has been merged
-          echo context #${{ github.event }}
+          echo "PR #${{ github.event.number }} has been merged";
+          echo "context #${{ github.event }}";
+
+      - run: |
+         echo "$GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }'"
+         echo "github.event.number = ${{ github.event.number  }}"
+         echo "github.event.pull_request.number = ${{ github.event.pull_request.number }}"
+         echo "github.event.issue.number = ${{ github.event.issue.number }}"
 
       - uses: actions/github-script@v3
         with:
