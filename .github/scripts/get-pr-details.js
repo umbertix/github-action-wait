@@ -5,7 +5,7 @@ module.exports = async ({github, core}) => {
         repo: repoName,
         commit_sha: SHA
     })
-
+    console.log(SHA, repoOwner, repoName, result)
     const pr = result.data[0];
 
     core.setOutput('prNumber', (pr && pr.number) || '');
