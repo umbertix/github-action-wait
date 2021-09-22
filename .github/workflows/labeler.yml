@@ -2,7 +2,7 @@ name: Workflow dispatch create PR
 
 on:
   pull_request:
-    types: [opened, ready_for_review]
+    types: [assigned, opened, synchronize, reopened]
 
 env:
   environments: ["test", "stg", "prd"]
@@ -13,6 +13,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: test
 
       - uses: actions-ecosystem/action-add-labels@v1
         with:
