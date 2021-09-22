@@ -5,7 +5,7 @@ on:
     types: [assigned, opened, synchronize, reopened]
 
 env:
-  environments: ["test", "stg", "prd"]
+  environments: "test\nstg\nprd"
 
 jobs:
   add_labels:
