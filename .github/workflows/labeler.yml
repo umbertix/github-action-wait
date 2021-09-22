@@ -5,7 +5,7 @@ on:
     types: [assigned, opened, synchronize, reopened]
 
 env:
-  environments: ["test", "stg", "prd"]
+  environments: "test\nstg\nprd"
 
 jobs:
   add_labels:
@@ -17,7 +17,11 @@ jobs:
         with:
           labels: test
 
-      - uses: actions-ecosystem/action-add-labels@v1
+      - uses: actions/github-script@v4
+        id: scriptPR
         with:
-          labels: ${{ env.environments }}
+          script: |
+            const script = require('./.github/scripts/add-labels.js')
+            await script({github, core}, ${{ github.repository }}, ${{ github.event.number }}, ["test","input","else"])
+
 
