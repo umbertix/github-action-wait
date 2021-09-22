@@ -1,0 +1,20 @@
+name: Workflow dispatch create PR
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+
+env:
+  environments: ["test", "stg", "prd"]
+
+jobs:
+  add_labels:
+    name: Add labels automatically
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: ${{ env.environments }}
+
